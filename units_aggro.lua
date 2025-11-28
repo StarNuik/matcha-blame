@@ -23,8 +23,8 @@ function aggro:UpdateSingle(guid)
 		self.chilling[guid] = true
 	end
 	if target_exists and self.chilling[guid] then
-		self.count[target_guid] = self.count[target_guid] + 1
-		table.delete(self.chilling, guid)
+		self.count[target_guid] = self.count[target_guid] or 0 + 1
+		self.chilling[guid] = nil
 	end
 end
 
