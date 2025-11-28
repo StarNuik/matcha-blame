@@ -1,13 +1,16 @@
-blame.SetEnv(blame)
+function blame:Init()
+	self.model = self:NewModel()
 
-function Init()
-	controller.Init()
-	visible_units.Init()
-	view.Init()
-	print(DISPLAY_NAME .. " loaded.")
+	self.view = self:NewView(self.model)
+	
+	self.units = self:NewVisibleUnits()
+	self.aggro = self:NewUnitsAggro(self.units)
+	self.controller = self:NewController(self.model, self.units, self.aggro)
+	
+	print(blame.DISPLAY_NAME .. " loaded.")
 end
 
-Init()
+blame:Init()
 
 -- f = CreateFrame("Frame")
 

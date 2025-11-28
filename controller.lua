@@ -2,15 +2,25 @@ local model = blame.model
 local units = blame.visible_units
 local aggro = blame.units_aggro
 
-blame.controller = {}
-blame.SetEnv(blame.controller)
+local controller = {} -- prototype
 
-TICK_SECONDS = 0.1
+function blame:NewController(model, units, aggro)
+	local self = new(controller)
+	
+	self.until_tick = 0
+	self.tick = 0
 
-local until_tick = 0
-local tick = 0
+	self.model = model
+	self.units = units
+	self.aggro = aggro
 
-local function UnitProps(guid, aggro_count)
+	self:Init()
+	return self
+end
+
+local TICK_SECONDS = 0.1
+
+local function unit_props(guid, aggro_count)
 	local name = UnitName(guid)
 	local level = UnitLevel(guid)
 	local _, class = UnitClass(guid)
@@ -19,34 +29,32 @@ local function UnitProps(guid, aggro_count)
 	elseif not UnitPlayerControlled(guid) then
 		class = "MOB"
 	end
-	return model.ModelEntry(aggro_count, name, nil, class)
+	return blame:NewModelEntry(aggro_count, name, nil, class)
 end
 
-local function Tick()
-	model.Clear()
-	units.Update()
-	aggro.Update()
+function controller:Tick()
+	self.model:Clear()
+	self.units:Update()
+	self.aggro:Update()
 	local idx = 1
-	for guid, val in pairs(aggro.Get()) do
-		model.Set(idx, UnitProps(guid, val))
+	for guid, val in pairs(self.units:Get()) do
+		self.model:Set(idx, unit_props(guid, 0))
 		idx = idx + 1
 	end
 end
 
-local function Update()
-	until_tick = until_tick - arg1
-	if until_tick <= 0 then
-		tick = tick + 1
-		until_tick = until_tick + TICK_SECONDS
-		Tick()
+function controller:Update()
+	self.until_tick = self.until_tick - arg1
+	if self.until_tick <= 0 then
+		self.tick = self.tick + 1
+		self.until_tick = self.until_tick + TICK_SECONDS
+		self:Tick()
 	end
 end
 
-function Init()
+function controller:Init()
 	local f = CreateFrame("Frame")
 
-	f:SetScript("OnUpdate", function() Update() end)
-
-	print("Blame loaded")
+	f:SetScript("OnUpdate", function() self:Update() end)
 end
 

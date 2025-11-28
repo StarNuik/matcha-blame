@@ -1,44 +1,46 @@
-local units = blame.visible_units
+aggro = {} -- prototype
 
-blame.units_aggro = {}
-blame.SetEnv(blame.units_aggro)
+function blame:NewUnitsAggro(units)
+	local self = new(aggro)
+	self.count = {}
+	self.chilling = {}
+	self.units = units
+	return self
+end
 
-local count = {}
-local chilling = {}
-
-local function ShouldTrackAggro(guid)
+local function should_track(guid)
 	return UnitIsEnemy("player", guid)
 end
 
 
-local function UpdateSingle(guid)
-	if not ShouldTrackAggro(guid) then
+function aggro:UpdateSingle(guid)
+	if not should_track(guid) then
 		return
 	end
 
 	local target_exists, target_guid = UnitExists(guid .. "target")
 	if not target_exists then
-		chilling[guid] = true
+		self.chilling[guid] = true
 	end
-	if target_exists and chilling[guid] then
-		count[target_guid] = count[target_guid] + 1
-		_G.table.delete(chilling, guid)
-	end
-end
-
-function Update()
-	for guid, _ in pairs(units.Get()) do
-		UpdateSingle(guid)
+	if target_exists and self.chilling[guid] then
+		self.count[target_guid] = self.count[target_guid] + 1
+		table.delete(self.chilling, guid)
 	end
 end
 
-function Get()
-	return count
+function aggro:Update()
+	for guid, _ in pairs(self.units:Get()) do
+		self:UpdateSingle(guid)
+	end
 end
 
-function Clear()
-	count = {}
-	chilling = {}
+function aggro:Get()
+	return self.count
+end
+
+function aggro:Clear()
+	self.count = {}
+	self.chilling = {}
 end
 
 

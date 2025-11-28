@@ -1,32 +1,19 @@
-blame.visible_units = {}
-blame.SetEnv(blame.visible_units)
+local units = {} -- prototype
 
-local units = {}
+function blame:NewVisibleUnits()
+	local self = new(units)
+	units.set = {}
 
-
-local function Remove(guid)
-	table.delete(units, guid)
+	units:Init()
+	
+	return units
 end
 
-local function Add(unit_id)
-	local exists, guid = UnitExists(unit_id)
-	if not guid then
-		print("no guid: " .. tostring(unit_id) .. ", " .. tostring(guid))
-		return
-	end
-
-	if not exists then
-		Remove(guid)
-	end
-
-	units[guid] = true
-end
-
-function Init()
+function units:Init()
 	-- https://github.com/shagu/ShaguScan/blob/master/core.lua
 	local f = CreateFrame("Frame")
 	
-	f:SetScript("OnEvent", function() Add(arg1) end)
+	f:SetScript("OnEvent", function() self:Add(arg1) end)
 	
 	-- unitstr
 	-- f:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
@@ -45,19 +32,38 @@ function Init()
 	f:RegisterEvent("UNIT_CASTEVENT")
 end
 
-
-function Get()
-	return units
+function units:Remove(guid)
+	self.set[guid] = nil
 end
 
-local function ShouldPurge(guid)
+function units:Add(unit_id)
+	-- print(unit_id)
+	local exists, guid = UnitExists(unit_id)
+	if not guid then
+		print("no guid: " .. tostring(unit_id) .. ", " .. tostring(guid))
+		return
+	end
+
+	if not exists then
+		self:Remove(guid)
+		return
+	end
+
+	self.set[guid] = true
+end
+
+function units:Get()
+	return units.set
+end
+
+local function should_purge(guid)
 	return not UnitIsVisible(guid)
 end
 
-function Update()
-	for guid, _ in pairs(units) do
-		if ShouldPurge(guid) then
-			Remove(guid)
+function units:Update()
+	for guid, _ in pairs(self.set) do
+		if should_purge(guid) then
+			self:Remove(guid)
 		end
 	end
 end

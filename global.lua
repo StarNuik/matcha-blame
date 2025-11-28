@@ -5,7 +5,14 @@ function blame.SetEnv(t, index)
     setfenv(2, t)
 end
 
-blame.SetEnv(blame)
+function new(t)
+    obj = {}
+    setmetatable(obj, t)
+    t.__index = t
+    return obj
+end
 
-DISPLAY_NAME = "Blame"
-ADDON_NAME = "matcha-blame"
+-- blame.SetEnv(blame)
+
+blame.DISPLAY_NAME = "Blame"
+blame.ADDON_NAME = "matcha-blame"

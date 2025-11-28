@@ -1,13 +1,18 @@
-blame.model = {}
-blame.SetEnv(blame.model)
+local model = {}
 
-function ModelEntry(count, name, desc, class)
-	props.name = props.name or "UNKNOWN"
-	props.name = string.sub(props.name, 1, 12)
+function blame:NewModel()
+	local self = new(model)
+	self.entries = {}
+	return self
+end
 
-	props.count = math.min(props.count or 0, 999)
-	props.description = props.description or ""
-	props.class = props.class or "PRIEST"
+function blame:NewModelEntry(count, name, desc, class)
+	name = name or "UNKNOWN"
+	name = string.sub(name, 1, 12)
+
+	count = math.min(count or 0, 999)
+	desc = desc or ""
+	class = class or "PRIEST"
 
 	return {
 		count = count,
@@ -17,28 +22,26 @@ function ModelEntry(count, name, desc, class)
 	}
 end
 
-local entries = {}
-
-function Clear()
-	entries = {}
+function model:Clear()
+	self.entries = {}
 end
 
-function Set(idx, entry)
+function model:Set(idx, entry)
 	if not idx or not entry then
 		return
 	end
 
-	entries[idx] = entry
+	self.entries[idx] = entry
 end
 
-function Count()
-	return table.getn(entries)
+function model:Count()
+	return table.getn(self.entries)
 end
 
-function Get(idx)
-	return entries[idx]
+function model:Get(idx)
+	return self.entries[idx]
 end
 
-function All()
-	return entries
+function model:All()
+	return self.entries
 end
