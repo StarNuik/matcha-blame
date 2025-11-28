@@ -9,9 +9,8 @@ function blame:NewUnitsAggro(units)
 end
 
 local function should_track(guid)
-	return UnitIsEnemy("player", guid)
+	return UnitCanAttack("player", guid) and not UnitIsDead(guid)
 end
-
 
 function aggro:UpdateSingle(guid)
 	if not should_track(guid) then
@@ -23,7 +22,8 @@ function aggro:UpdateSingle(guid)
 		self.chilling[guid] = true
 	end
 	if target_exists and self.chilling[guid] then
-		self.count[target_guid] = self.count[target_guid] or 0 + 1
+		local curr = self.count[target_guid] or 0
+		self.count[target_guid] = curr + 1
 		self.chilling[guid] = nil
 	end
 end

@@ -2,6 +2,8 @@ local model = blame.model
 local units = blame.visible_units
 local aggro = blame.units_aggro
 
+local TICK_SECONDS = 0.1
+
 local controller = {} -- prototype
 
 function blame:NewController(model, units, aggro)
@@ -17,8 +19,6 @@ function blame:NewController(model, units, aggro)
 	self:Init()
 	return self
 end
-
-local TICK_SECONDS = 0.1
 
 local function unit_props(guid, aggro_count)
 	local name = UnitName(guid)
@@ -37,8 +37,8 @@ function controller:Tick()
 	self.units:Update()
 	self.aggro:Update()
 	local idx = 1
-	for guid, val in pairs(self.units:Get()) do
-		self.model:Set(idx, unit_props(guid, 0))
+	for guid, val in pairs(self.aggro:Get()) do
+		self.model:Set(idx, unit_props(guid, val))
 		idx = idx + 1
 	end
 end
