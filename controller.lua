@@ -24,10 +24,11 @@ local function unit_props(guid, aggro_count)
 	local name = UnitName(guid)
 	local level = UnitLevel(guid)
 	local _, class = UnitClass(guid)
-	if not UnitIsFriend(guid, "player") then
+	if not UnitPlayerControlled(guid) and not UnitIsFriend(guid, "player") then
 		class = "ENEMY"
-	elseif not UnitPlayerControlled(guid) then
-		class = "MOB"
+	end
+	if not UnitIsVisible(guid) or UnitIsFriend(guid, "player") and not UnitPlayerControlled(guid)  then
+		class = "NPC"
 	end
 	return blame:NewModelEntry(aggro_count, name, nil, class)
 end
