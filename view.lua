@@ -44,8 +44,8 @@ local function time_to_str(time)
 	local now = _G.time()
 	local delta = now - time
 	if delta <= 60 then
-		return delta .. "s"
-		-- return "<1m"
+		-- return delta .. "s"
+		return "<1m"
 	end
 	if delta <= 60 * 60 then
 		return floor(delta / 60) .. "m"

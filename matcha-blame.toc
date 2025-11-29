@@ -10,3 +10,5 @@ model.lua
 view.lua
 controller.lua
 blame.lua
+
+slash.lua
