@@ -3,6 +3,7 @@ local model = {}
 function blame:NewModel()
 	local self = new(model)
 	self.entries = {}
+	self.collapsed = false
 	return self
 end
 

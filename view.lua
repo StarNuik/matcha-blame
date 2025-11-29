@@ -115,9 +115,13 @@ local function len(list)
 end
 
 function view:Update()
-	-- for k, v in pairs(self) do
-	-- 	print(k .. ": " .. tostring(v))
-	-- end
+	if self.model.collapsed then
+		self.entry_parent:Hide()
+		self:Resize()
+		return
+	end
+	self.entry_parent:Show()
+
 	local active_count = self:CountActive()
 	local model_count = self:CountModel()
 	if model_count > active_count then
@@ -201,6 +205,11 @@ end
 
 -- Layout
 function view:Resize()
+	if self.model.collapsed then
+		self.frame:SetHeight(HEADER_HEIGHT)
+		self.entry_parent:SetHeight(0)
+		return
+	end
 	local active_count = self:CountActive()
 	local list_height = LIST_ENTRY_HEIGHT * active_count + LIST_SPACING * active_count
 	self.frame:SetHeight(HEADER_HEIGHT + list_height)
@@ -257,12 +266,15 @@ function view:NewItem(parent)
 end
 
 function view:Header(parent)
-	local f = CreateFrame("Frame", "$parent_Header", parent)
+	local f = CreateFrame("Button", "$parent_Header", parent)
 	f:SetHeight(HEADER_HEIGHT)
 	f:SetWidth(parent:GetWidth())
 	f:SetBackdrop(BACKDROP)
 	f:SetBackdropColor(.0, .0, .0, HEADER_OPACITY)
 	f:SetPoint("TOPLEFT", parent, 0, 0)
+	f:EnableMouse(true)
+	f:RegisterForClicks("LeftButtonDown")
+	f:SetScript("OnClick", function() self.model.collapsed = not self.model.collapsed end)
 
 	local text = f:CreateFontString(nil, "OVERLAY", "GameFontWhite")
 	text:SetPoint("TOPLEFT", f, "TOPLEFT", 0, 0)
