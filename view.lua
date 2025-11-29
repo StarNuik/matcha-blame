@@ -9,7 +9,7 @@ local LIST_ENTRY_FONT_SIZE = 12
 local LIST_ENTRY_HEIGHT = LIST_ENTRY_FONT_SIZE + 2
 local FONT_PATH = "Interface\\AddOns\\matcha-blame\\Fonts\\UbuntuMono-Regular.ttf"
 local CONTAINER_SIZE = {
-	width = 200,
+	width = 160,
 	height = HEADER_HEIGHT,
 }
 local BACKDROP = { 
@@ -38,6 +38,22 @@ end
 
 local function wrap_text_with_color(text, colorHexString)
 	return string.format("|c%s%s|r", colorHexString, text)
+end
+
+local function time_to_str(time)
+	local now = _G.time()
+	local delta = now - time
+	if delta <= 60 then
+		return delta .. "s"
+		-- return "<1m"
+	end
+	if delta <= 60 * 60 then
+		return floor(delta / 60) .. "m"
+	end
+	if delta <= 60 * 60 * 24 then
+		return floor(delta / 60 / 60) .. "h"
+	end
+	return "long ago"
 end
 
 local view = {}
@@ -173,7 +189,7 @@ function view:UpdateEntry(view_entry, model_entry)
 	local name = wrap_text_with_color(model_entry.name, color)
 
 	local count = model_entry.count
-	local desc = model_entry.description
+	local desc = time_to_str(model_entry.time)
 
 	local text = string.format("%3d | %-24s | %s", count, name, desc)
 	view_entry:SetText(text)

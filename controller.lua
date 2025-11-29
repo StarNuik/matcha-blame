@@ -20,7 +20,7 @@ function blame:NewController(model, units, aggro)
 	return self
 end
 
-local function unit_props(guid, aggro_count)
+local function unit_props(guid, aggro_count, time)
 	local name = UnitName(guid)
 	local level = UnitLevel(guid)
 	local _, class = UnitClass(guid)
@@ -30,7 +30,7 @@ local function unit_props(guid, aggro_count)
 	if not UnitIsVisible(guid) or UnitIsFriend(guid, "player") and not UnitPlayerControlled(guid)  then
 		class = "NPC"
 	end
-	return blame:NewModelEntry(aggro_count, name, nil, class)
+	return blame:NewModelEntry(aggro_count, name, time, class)
 end
 
 function controller:Tick()
@@ -38,10 +38,11 @@ function controller:Tick()
 	self.units:Update()
 	self.aggro:Update()
 	local idx = 1
-	for guid, val in pairs(self.aggro:Get()) do
-		self.model:Set(idx, unit_props(guid, val))
+	for guid, entry in pairs(self.aggro:Get()) do
+		self.model:Set(idx, unit_props(guid, entry.count, entry.time))
 		idx = idx + 1
 	end
+	sort(self.model:All(), function(lhs, rhs) return lhs.time > rhs.time end)
 end
 
 function controller:Update()

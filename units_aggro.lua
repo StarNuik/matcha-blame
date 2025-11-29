@@ -1,8 +1,15 @@
 aggro = {} -- prototype
 
+local function aggro_entry(count, time)
+	return {
+		count = count,
+		time = time,
+	}
+end
+
 function blame:NewUnitsAggro(units)
 	local self = new(aggro)
-	self.count = {}
+	self.entries = {}
 	self.chilling = {}
 	self.units = units
 	return self
@@ -22,8 +29,10 @@ function aggro:UpdateSingle(guid)
 		self.chilling[guid] = true
 	end
 	if target_exists and self.chilling[guid] then
-		local curr = self.count[target_guid] or 0
-		self.count[target_guid] = curr + 1
+		local curr = self.entries[target_guid]
+		curr = curr or aggro_entry(0, 0)
+		curr = aggro_entry(curr.count + 1, time())
+		self.entries[target_guid] = curr
 		self.chilling[guid] = nil
 	end
 end
@@ -35,11 +44,11 @@ function aggro:Update()
 end
 
 function aggro:Get()
-	return self.count
+	return self.entries
 end
 
 function aggro:Clear()
-	self.count = {}
+	self.entries = {}
 	self.chilling = {}
 end
 

@@ -6,18 +6,18 @@ function blame:NewModel()
 	return self
 end
 
-function blame:NewModelEntry(count, name, desc, class)
+function blame:NewModelEntry(count, name, time, class)
 	name = name or "UNKNOWN"
 	name = string.sub(name, 1, 12)
 
 	count = math.min(count or 0, 999)
-	desc = desc or ""
+	time = time or _G.time()
 	class = class or "PRIEST"
 
 	return {
 		count = count,
 		name = name,
-		description = desc,
+		time = time,
 		class = class
 	}
 end
