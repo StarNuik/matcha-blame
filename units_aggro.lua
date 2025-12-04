@@ -38,7 +38,7 @@ function aggro:UpdateSingle(guid)
 end
 
 function aggro:Update()
-	for guid, _ in pairs(self.units:Get()) do
+	for guid, _ in pairs(self.units:All()) do
 		self:UpdateSingle(guid)
 	end
 end

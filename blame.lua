@@ -3,7 +3,7 @@ function blame:Init()
 
 	self.view = self:NewView(self.model)
 	
-	self.units = self:NewVisibleUnits()
+	self.units = blame.NewScanEnemy()
 	self.aggro = self:NewUnitsAggro(self.units)
 	self.controller = self:NewController(self.model, self.units, self.aggro)
 	

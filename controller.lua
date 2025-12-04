@@ -35,7 +35,6 @@ end
 
 function controller:Tick()
 	self.model:Clear()
-	self.units:Update()
 	self.aggro:Update()
 	local idx = 1
 	for guid, entry in pairs(self.aggro:Get()) do

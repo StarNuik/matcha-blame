@@ -3,8 +3,9 @@
 ## Notes: Show who pulled aggro
 ## Version: 0.1
 
+api.lua
 global.lua
-visible_units.lua
+scan_enemy.lua
 units_aggro.lua
 model.lua
 view.lua
