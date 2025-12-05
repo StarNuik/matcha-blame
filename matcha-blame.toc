@@ -12,6 +12,7 @@ view\container.lua
 view\header.lua
 view\list.lua
 view\pool.lua
+view\flex.lua
 view\list_item.lua
 view\main.lua
 

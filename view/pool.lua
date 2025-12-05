@@ -12,26 +12,27 @@ function view.NewPool(parent)
 end
 
 function pool:ctor(parent)
-	self.SizeChanged = blame.new_event()
+	self.Changed = blame.new_event()
 	self.active = {}
 	self.hidden = {}
 	self.item_count = 0
 
-	local f = CreateFrame("Frame", "$parent_Pool", parent)
-	f:SetPoint("TOPLEFT", parent, 0, 0)
-	f:SetWidth(parent:GetWidth())
-	f:SetHeight(1)
-
-	self.frame = f
+	self.frame = parent
 	return self
 end
 
 function pool:Resize(target_count)
+	if target_count == len(self.active) then
+		return
+	end
+
 	self:hide_all()
 	while self.item_count < target_count do
 		self:expand()
 	end
 	self:show(target_count)
+
+	self.Changed.Fire()
 end
 
 function pool:AllActive()

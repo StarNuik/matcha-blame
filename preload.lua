@@ -43,21 +43,22 @@ function blame.new2(t, ...)
 end
 
 function blame.new_event()
-	local ev = {
+	local self = {
 		subscribers = {},
 	}
 
-	function ev:Subscribe(callback)
+	function self.Subscribe(callback)
+		print(callback)
 		table.insert(self.subscribers, callback)
 	end
 
-	function ev:Fire()
+	function self.Fire()
 		for _, callback in ipairs(self.subscribers) do
 			callback()
 		end
 	end
 
-	return ev
+	return self
 end
 -- blame.SetEnv(blame)
 

@@ -10,11 +10,12 @@ end
 function list_item:ctor(parent)
 	local text = parent:CreateFontString(nil, "OVERLAY", "GameFontWhite")
 
-	text:SetPoint("TOPLEFT", parent, "TOPLEFT", 0, 0)
+	text:SetPoint("TOP", 0, 0)
 	text:SetWidth(parent:GetWidth())
 	text:SetHeight(view.LIST_ENTRY_HEIGHT)
 	text:SetText("Empty entry")
 	text:SetJustifyH("LEFT")
+	-- text:SetJustifyV("TOP")
 	text:SetShadowColor(0, 0, 0)
 	text:SetShadowOffset(1, -1)
 	view.set_font(text, view.LIST_ENTRY_FONT_SIZE)
@@ -34,4 +35,8 @@ end
 
 function list_item:SetText(text)
 	self.text:SetText(text)
+end
+
+function list_item:SetPoint(point, x, y)
+	self.text:SetPoint(point, parent, "TOP", x, y)
 end

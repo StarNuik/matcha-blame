@@ -10,7 +10,7 @@ end
 function list:ctor(parent)
 	local f = CreateFrame("Frame", "$parent_List", parent)
 	
-	f:SetPoint("TOPLEFT", parent, 0, -view.HEADER_HEIGHT)
+	f:SetPoint("TOP", 0, -view.HEADER_HEIGHT)
 	f:SetWidth(parent:GetWidth())
 	f:SetHeight(1)
 	f:SetBackdrop(view.BACKDROP)
