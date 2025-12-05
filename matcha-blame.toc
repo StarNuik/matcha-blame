@@ -1,15 +1,30 @@
 ## Interface: 11200
-## Title: Blame
+## Title: |cff74A12EMatcha|cffffffff Blame
 ## Notes: Show who pulled aggro
-## Version: 0.1
+## Version: 0.2
 
+
+preload.lua
 api.lua
-global.lua
-scan_enemy.lua
-units_aggro.lua
-model.lua
-view.lua
-controller.lua
-blame.lua
 
-slash.lua
+view\preload.lua
+view\container.lua
+view\header.lua
+view\list.lua
+view\pool.lua
+view\list_item.lua
+view\main.lua
+
+main.lua
+
+scan_enemy.lua
+scan_aggro.lua
+
+# old
+# units_aggro.lua
+# model.lua
+# view.lua
+# controller.lua
+# blame.lua
+
+# slash.lua

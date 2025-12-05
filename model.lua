@@ -1,13 +1,16 @@
-local model = {}
+local model = {
+	hide_all = false,
+	hide_list = false,
+}
 
-function blame:NewModel()
+function blame.NewModel()
 	local self = new(model)
 	self.entries = {}
 	self.collapsed = false
 	return self
 end
 
-function blame:NewModelEntry(count, name, time, class)
+function blame.NewModelEntry(count, name, time, class)
 	name = name or "UNKNOWN"
 	name = string.sub(name, 1, 12)
 
