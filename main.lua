@@ -4,15 +4,10 @@ local model = blame.NewModel()
 
 local view = blame.view.New(model)
 
-model:ClearEntries()
-model:PushEntry("woof")
-model:PushEntry("meow")
-model:PushEntry("moo")
-model:PushEntry("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-model:FireChanged()
+local uadd = blame.NewUnitAdd(model)
+local u2entry = blame.NewUnitToEntry(model)
 
 self.model = model
-self.view = view
 
 -- self.units = blame.NewScanEnemy()
 -- self.aggro = self:NewUnitsAggro(self.units)

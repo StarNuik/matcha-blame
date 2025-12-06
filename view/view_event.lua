@@ -1,0 +1,3 @@
+view_event = {
+	EXTERNAL_UPDATE = "EXTERNAL_UPDATE",
+}

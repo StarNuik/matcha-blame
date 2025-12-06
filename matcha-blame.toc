@@ -10,6 +10,7 @@ api.lua
 model.lua
 
 view\preload.lua
+view\view_event.lua
 view\container.lua
 view\header.lua
 view\list.lua
@@ -17,6 +18,10 @@ view\pool.lua
 view\flex.lua
 view\list_item.lua
 view\main.lua
+
+services\svc_event.lua
+services\unit_add.lua
+services\unit_to_entry.lua
 
 main.lua
 

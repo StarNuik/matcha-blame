@@ -65,4 +65,32 @@ function blame.len(list)
 	return table.getn(list)
 end
 
+function blame.new_event_bus()
+	local self = {}
 
+	function self.Fire(key, ...)
+		if not self[key] then
+			return
+		end
+		local listeners = self[key]
+		for _, listener in ipairs(listeners) do
+			listener(unpack(arg))
+		end
+	end
+
+	function self.Subscribe(key, listener)
+		if not self[key] then
+			self[key] = {}
+		end
+		table.insert(self[key], listener)
+	end
+
+	return self
+end
+
+function append(dest, ...)
+	for _, val in ipairs(arg) do
+		table.insert(dest, val)
+	end
+	return dest
+end

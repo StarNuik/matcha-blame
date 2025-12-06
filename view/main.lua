@@ -43,7 +43,7 @@ function view_obj:bind(ctr, h, list, flex, pool)
 end
 
 function view_obj:bind_model(model, list, pool)
-	model.Changed.Subscribe(function()
+	api.Subscribe(view_event.EXTERNAL_UPDATE, function()
 		if model.hide_list then
 			list.frame:Hide()
 		else
