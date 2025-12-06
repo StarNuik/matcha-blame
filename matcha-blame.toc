@@ -7,6 +7,8 @@
 preload.lua
 api.lua
 
+model.lua
+
 view\preload.lua
 view\container.lua
 view\header.lua
@@ -18,8 +20,8 @@ view\main.lua
 
 main.lua
 
-scan_enemy.lua
-scan_aggro.lua
+# scan_enemy.lua
+# scan_aggro.lua
 
 # old
 # units_aggro.lua

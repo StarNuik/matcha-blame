@@ -3,34 +3,29 @@ local view = blame.view
 -- Prototype
 local flex = {}
 
-local function len(list)
-	return table.getn(list)
+function view.NewFlex(...)
+	return blame.new2(flex, unpack(arg))
 end
 
-function view.NewFlex(parent)
-	return blame.new2(flex, parent)
-end
+function flex:ctor(frame, get_children)
+	-- f:SetPoint("TOP", 0, 0)
+	-- f:SetWidth(parent:GetWidth())
+	-- f:SetHeight(1)
 
-function flex:ctor(parent)
-	local f = CreateFrame("Frame", "$parent_Flex", parent)
-
-	f:SetPoint("TOP", 0, 0)
-	f:SetWidth(parent:GetWidth())
-	f:SetHeight(1)
-
-	self.frame = f
+	self.frame = frame
+	self.get_children = get_children
 	return self
 end
 
 function flex:Update()
-	local children = {self.frame:GetRegions()}
+	local children = self.get_children()
 	local spacing = view.LIST_ENTRY_HEIGHT * 0.5 + view.LIST_SPACING * 0.5
 	local magic = function(idx) return (1 + (idx - 1) * 2) end
-	for idx, frame in ipairs(children) do
+	for idx, child in ipairs(children) do
 		local offset_y = spacing * magic(idx)
-		frame:ClearAllPoints()
-		frame:SetPoint("TOP", 0, -offset_y)
+		child:ClearAllPoints()
+		child:SetPoint("TOP", 0, -offset_y)
 	end
-	local size_y = spacing * magic(len(children) + 1)
+	local size_y = spacing * magic(blame.len(children) + 1)
 	self.frame:SetHeight(size_y)
 end

@@ -1,8 +1,18 @@
 local self = blame
 
--- self.model = self:NewModel()
+local model = blame.NewModel()
 
-self.view_obj = blame.view.New()
+local view = blame.view.New(model)
+
+model:ClearEntries()
+model:PushEntry("woof")
+model:PushEntry("meow")
+model:PushEntry("moo")
+model:PushEntry("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+model:FireChanged()
+
+self.model = model
+self.view = view
 
 -- self.units = blame.NewScanEnemy()
 -- self.aggro = self:NewUnitsAggro(self.units)

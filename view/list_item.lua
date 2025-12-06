@@ -37,6 +37,10 @@ function list_item:SetText(text)
 	self.text:SetText(text)
 end
 
+function list_item:ClearAllPoints()
+	self.text:ClearAllPoints()
+end
+
 function list_item:SetPoint(point, x, y)
-	self.text:SetPoint(point, parent, "TOP", x, y)
+	self.text:SetPoint(point, x, y)
 end

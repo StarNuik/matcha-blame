@@ -60,6 +60,9 @@ function blame.new_event()
 
 	return self
 end
--- blame.SetEnv(blame)
+
+function blame.len(list)
+	return table.getn(list)
+end
 
 

@@ -3,10 +3,6 @@ local view = blame.view
 -- Prototype
 local pool = {}
 
-local function len(list)
-	return table.getn(list)
-end
-
 function view.NewPool(parent)
 	return blame.new2(pool, parent)
 end
@@ -22,7 +18,7 @@ function pool:ctor(parent)
 end
 
 function pool:Resize(target_count)
-	if target_count == len(self.active) then
+	if target_count == blame.len(self.active) then
 		return
 	end
 
@@ -35,13 +31,17 @@ function pool:Resize(target_count)
 	self.Changed.Fire()
 end
 
+function pool:SetText(idx, text)
+	self.active[idx]:SetText(text)
+end
+
 function pool:AllActive()
 	return self.active
 end
 
 function pool:hide_all()
 	local active = self.active
-	for idx = len(active), 1, -1 do
+	for idx = blame.len(active), 1, -1 do
 		local curr = active[idx]
 		table.remove(active, idx)
 		table.insert(self.hidden, curr)
@@ -52,7 +52,7 @@ end
 function pool:show(count)
 	local hidden = self.hidden
 	for idx = 1, count do
-		local last_idx = len(hidden)
+		local last_idx = blame.len(hidden)
 		local curr = hidden[last_idx]
 		table.remove(hidden, last_idx)
 		table.insert(self.active, curr)

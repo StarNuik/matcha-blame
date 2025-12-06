@@ -3,23 +3,19 @@ local view = blame.view
 -- Prototype
 local view_obj = {}
 
-function view.New()
-	return blame.new2(view_obj)
+function view.New(...)
+	return blame.new2(view_obj, unpack(arg))
 end
 
-function view_obj:ctor()
+function view_obj:ctor(model)
 	local ctr = view.NewContainer(UIParent)
 	local h = view.NewHeader(ctr.frame)
 	local list = view.NewList(ctr.frame)
-	local flex = view.NewFlex(list.frame)
-	local pool = view.NewPool(flex.frame)
+	local pool = view.NewPool(list.frame)
+	local flex = view.NewFlex(list.frame, function() return pool:AllActive() end)
 	
 	self:bind(ctr, h, list, flex, pool)
-	pool:Resize(2)
-
-	local items = pool:AllActive()
-	items[1]:SetText("meow")
-	items[2]:SetText("woof")
+	self:bind_model(model, list, pool)
 
 	self.ctr = ctr
 	self.h = h
@@ -40,8 +36,25 @@ function view_obj:bind(ctr, h, list, flex, pool)
 	pool.Changed.Subscribe(function()
 		flex:Update()
 
-		local height = flex.frame:GetHeight()
-		list.frame:SetHeight(height)
+		local height = list.frame:GetHeight()
+		-- list.frame:SetHeight(height)
 		ctr:SetHeight(height)
+	end)
+end
+
+function view_obj:bind_model(model, list, pool)
+	model.Changed.Subscribe(function()
+		if model.hide_list then
+			list.frame:Hide()
+		else
+			list.frame:Show()
+		end
+
+		local target_count = blame.len(model.entries)
+		pool:Resize(target_count)
+
+		for idx, entry in ipairs(model.entries) do
+			pool:SetText(idx, entry)
+		end
 	end)
 end
