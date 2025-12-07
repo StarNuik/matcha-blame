@@ -9,7 +9,10 @@ local eadd = blame.NewAddEnemy(model)
 local aadd = blame.NewAddAggro(model)
 local radd = blame.NewAddAggroRecord(model)
 local rgroup = blame.NewGroupRecord(model)
+
 local set_entries = blame.NewSetEntries(model)
+
+local vhide = blame.NewViewHide(model)
 
 self.model = model
 

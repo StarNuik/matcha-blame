@@ -1,7 +1,7 @@
 -- Import
 local view = blame.view
 
-function view.NewContainer(parent)
+function view.NewContainer(parent, model)
 	local self = {}
 
 	local f  = CreateFrame("Frame", "Blame_Container", parent)
@@ -19,6 +19,14 @@ function view.NewContainer(parent)
 	api.Subscribe(view_event.FLEX_SIZE_CHANGED, function(size_y)
 		local height = view.HEADER_HEIGHT + size_y
 		f:SetHeight(height)
+	end)
+
+	api.Subscribe(view_event.MODEL_CHANGED, function()
+		if model.show then
+			f:Show()
+		else
+			f:Hide()
+		end
 	end)
 
 	self.frame = f

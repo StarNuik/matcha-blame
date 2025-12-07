@@ -17,6 +17,7 @@ view\list.lua
 view\pool.lua
 view\flex.lua
 view\list_item.lua
+view\close_button.lua
 view\main.lua
 
 services\svc_event.lua
@@ -26,6 +27,7 @@ services\add_enemy.lua
 services\add_aggro.lua
 services\add_aggro_record.lua
 services\group_record.lua
+services\view_hide.lua
 
 main.lua
 

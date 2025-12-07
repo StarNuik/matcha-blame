@@ -4,8 +4,11 @@ local view = blame.view
 function view.New(model)
 	local self = {}
 
-	local ctr = view.NewContainer(UIParent)
+	local ctr = view.NewContainer(UIParent, model)
+	
 	local h = view.NewHeader(ctr.frame)
+	local close = view.NewCloseButton(h.frame)
+	
 	local list = view.NewList(ctr.frame)
 	local pool = view.NewPool(list.frame, model.GetEntry)
 	local flex = view.NewFlex(list.frame, pool.AllActive)

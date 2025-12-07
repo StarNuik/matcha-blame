@@ -35,6 +35,10 @@ view.CLASS_COLORS = {
 	NPC = "FF909090",
 	ENEMY = "FFFF3030",
 }
+view.CLOSE_ICON_PATH = "Interface\\AddOns\\matcha-blame\\img\\close.tga"
+view.LIST_SHOWN_ICON_PATH = "Interface\\AddOns\\matcha-blame\\img\\down.tga"
+view.LIST_HIDDEN_ICON_PATH = "Interface\\AddOns\\matcha-blame\\img\\up.tga"
+
 
 function view.set_font(font_string, height, ...)
 	font_string:SetFont(view.FONT_PATH, height, arg)

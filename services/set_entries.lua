@@ -6,7 +6,7 @@ function blame.NewSetEntries(model)
 		return tostring(group.count) .. " " .. name
 	end
 
-	api.Subscribe(svc_event.UNIT_ADDED, function(unit_id)
+	api.Subscribe(svc_event.GROUP_UPDATED, function(unit_id)
 		model.entries = {}
 
 		local dest = model.entries
@@ -18,7 +18,8 @@ function blame.NewSetEntries(model)
 			append(dest, text)
 		end
 
-		api.Fire(view_event.MODEL_CHANGED, len(dest))
+		api.Fire(view_event.MODEL_ENTRIES_CHANGED, len(dest))
+		-- api.Fire(view_event.MODEL_CHANGED)
 	end)
 
 	return self

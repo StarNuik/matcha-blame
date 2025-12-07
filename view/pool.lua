@@ -13,7 +13,7 @@ function view.NewPool(parent, get_entry)
 		return self.active
 	end
 
-	api.Subscribe(view_event.MODEL_CHANGED, function(count) self:resize(count) end)
+	api.Subscribe(view_event.MODEL_ENTRIES_CHANGED, function(count) self:resize(count) end)
 
 	function self:resize(target_count)
 		if target_count == len(self.active) then

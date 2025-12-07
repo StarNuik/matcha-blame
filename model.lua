@@ -1,6 +1,6 @@
 function blame.NewModel()
 	local self = {
-		hide_list = false,
+		show = true,
 		entries = {}, -- list
 		units = {},
 		enemies = {},
