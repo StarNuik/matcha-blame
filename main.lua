@@ -4,8 +4,11 @@ local model = blame.NewModel()
 
 local view = blame.view.New(model)
 
-local uadd = blame.NewUnitAdd(model)
-local u2entry = blame.NewUnitToEntry(model)
+local uadd = blame.NewAddUnit(model)
+local eadd = blame.NewAddEnemy(model)
+local aadd = blame.NewAddAggro(model)
+local radd = blame.NewAddAggroRecord(model)
+local set_entries = blame.NewSetEntries(model)
 
 self.model = model
 

@@ -20,8 +20,11 @@ view\list_item.lua
 view\main.lua
 
 services\svc_event.lua
-services\unit_add.lua
-services\unit_to_entry.lua
+services\set_entries.lua
+services\add_unit.lua
+services\add_enemy.lua
+services\add_aggro.lua
+services\add_aggro_record.lua
 
 main.lua
 

@@ -1,8 +1,11 @@
 function blame.NewModel()
 	local self = {
 		hide_list = false,
-		entries = {},
+		entries = {}, -- list
 		units = {},
+		enemies = {},
+		aggro_enemies = {},
+		aggro_records = {},	 -- list
 	}
 
 	function self.GetEntry(idx)

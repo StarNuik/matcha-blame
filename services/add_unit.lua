@@ -1,4 +1,4 @@
-function blame.NewUnitAdd(model)
+function blame.NewAddUnit(model)
 	local self = {}
 
 	local function add_arg(unit_id)

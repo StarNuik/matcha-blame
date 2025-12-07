@@ -59,6 +59,17 @@ function api.Fire(key, ...)
 	api.bus.Fire(key, unpack(arg))
 end
 
+function api.GetMobTarget(unit_id)
+	local exists, guid = UnitExists(unit_id .. "target")
+	if not exists then
+		return nil
+	end
+	if api.IsEnemyMob(guid) then
+		return nil
+	end
+	return guid
+end
+
 function api.IsEnemyMob(unit_id)
 	return api.as_bool(UnitExists(unit_id)
 		and not UnitIsDead(unit_id)
