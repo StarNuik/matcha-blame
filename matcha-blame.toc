@@ -28,17 +28,11 @@ services\add_aggro.lua
 services\add_aggro_record.lua
 services\group_record.lua
 services\view_hide.lua
+services\cmd_model.lua
 
 main.lua
 
-# scan_enemy.lua
-# scan_aggro.lua
+slash.lua
 
 # old
-# units_aggro.lua
-# model.lua
 # view.lua
-# controller.lua
-# blame.lua
-
-# slash.lua

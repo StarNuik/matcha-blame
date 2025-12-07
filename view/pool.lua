@@ -56,6 +56,10 @@ function view.NewPool(parent, get_entry)
 	end
 
 	function self:show(count)
+		if count < 1 then
+			return
+		end
+		
 		local hidden = self.hidden
 		for idx = 1, count do
 			local last_idx = len(hidden)

@@ -4,4 +4,6 @@ svc_event = {
 	AGGRO_ADDED = "AGGRO_ADDED", -- function(guid)
 	RECORD_ADDED = "RECORD_ADDED", -- function(idx)
 	GROUP_UPDATED = "GROUP_UPDATED", -- function(idx)
+	CMD_MODEL_CLEAR = "CMD_MODEL_CLEAR",
+	CMD_MODEL_SHOW = "CMD_MODEL_SHOW",
 }

@@ -20,6 +20,7 @@ function blame.NewGroupRecord(model)
 		if len(model.record_groups) == 0 then
 			append(model.record_groups, new_group(record))
 			api.Fire(svc_event.GROUP_UPDATED, 1)
+			return
 		end
 		
 		local idx = len(model.record_groups)

@@ -13,5 +13,14 @@ function blame.NewModel()
 		return self.entries[idx]
 	end
 
+	function self.Clear()
+		self.entries = {}
+		self.units = {}
+		self.enemies = {}
+		self.aggro_enemies = {}
+		self.aggro_records = {}
+		self.record_groups = {}
+	end
+
 	return self
 end

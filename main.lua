@@ -11,8 +11,8 @@ local radd = blame.NewAddAggroRecord(model)
 local rgroup = blame.NewGroupRecord(model)
 
 local set_entries = blame.NewSetEntries(model)
-
 local vhide = blame.NewViewHide(model)
+local cmd = blame.NewCmdModel(model)
 
 self.model = model
 
