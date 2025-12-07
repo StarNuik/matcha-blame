@@ -96,5 +96,8 @@ function append(dest, ...)
 end
 
 function len(list)
+	if not list then
+		return 0
+	end
 	return table.getn(list)
 end
