@@ -25,6 +25,7 @@ services\add_unit.lua
 services\add_enemy.lua
 services\add_aggro.lua
 services\add_aggro_record.lua
+services\group_record.lua
 
 main.lua
 

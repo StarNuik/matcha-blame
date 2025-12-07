@@ -6,6 +6,7 @@ function blame.NewModel()
 		enemies = {},
 		aggro_enemies = {},
 		aggro_records = {},	 -- list
+		record_groups = {},
 	}
 
 	function self.GetEntry(idx)

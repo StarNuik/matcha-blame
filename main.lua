@@ -8,6 +8,7 @@ local uadd = blame.NewAddUnit(model)
 local eadd = blame.NewAddEnemy(model)
 local aadd = blame.NewAddAggro(model)
 local radd = blame.NewAddAggroRecord(model)
+local rgroup = blame.NewGroupRecord(model)
 local set_entries = blame.NewSetEntries(model)
 
 self.model = model

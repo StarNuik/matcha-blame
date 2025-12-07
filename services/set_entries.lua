@@ -1,16 +1,21 @@
 function blame.NewSetEntries(model)
 	local self = {}
 
+	local function group_to_string(group)
+		local name = api.UnitName(group.guid)
+		return tostring(group.count) .. " " .. name
+	end
+
 	api.Subscribe(svc_event.UNIT_ADDED, function(unit_id)
 		model.entries = {}
 
 		local dest = model.entries
-		local records = model.aggro_records
+		local groups = model.record_groups
 
-		for idx = len(records), 1, -1 do
-			local record = records[idx]
-			local name = api.UnitName(record.guid)
-			append(dest, name)
+		for idx = len(groups), 1, -1 do
+			local group = groups[idx]
+			local text = group_to_string(group)
+			append(dest, text)
 		end
 
 		api.Fire(view_event.MODEL_CHANGED, len(dest))
