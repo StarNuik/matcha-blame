@@ -7,8 +7,8 @@ function view.New(model)
 	local ctr = view.NewContainer(UIParent)
 	local h = view.NewHeader(ctr.frame)
 	local list = view.NewList(ctr.frame)
-	local pool = view.NewPool(list.frame, model)
-	local flex = view.NewFlex(list.frame, function() return pool.AllActive() end)
+	local pool = view.NewPool(list.frame, model.GetEntry)
+	local flex = view.NewFlex(list.frame, pool.AllActive)
 	
 	self.ctr = ctr
 	self.h = h

@@ -1,7 +1,7 @@
 -- Import
 local view = blame.view
 
-function view.NewPool(parent, model)
+function view.NewPool(parent, get_entry)
 	local self = {
 		active = {},
 		hidden = {},
@@ -48,7 +48,7 @@ function view.NewPool(parent, model)
 		end
 		for idx = 1, count do
 			local parent = self.frame
-			local new = view.NewListItem(parent, model)
+			local new = view.NewListItem(parent, get_entry)
 			append(self.hidden, new)
 			new.Hide()
 		end

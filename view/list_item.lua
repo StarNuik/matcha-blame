@@ -3,7 +3,7 @@ local view = blame.view
 -- Prototype
 local list_item = {}
 
-function view.NewListItem(parent, model)
+function view.NewListItem(parent, get_entry)
 	local self = {
 		idx = 0,
 	}
@@ -24,7 +24,7 @@ function view.NewListItem(parent, model)
 			return
 		end
 
-		text:SetText(model.entries[self.idx])
+		text:SetText(get_entry(self.idx))
 	end)
 
 	function self.Show(idx)

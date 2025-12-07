@@ -5,5 +5,9 @@ function blame.NewModel()
 		units = {},
 	}
 
+	function self.GetEntry(idx)
+		return self.entries[idx]
+	end
+
 	return self
 end
