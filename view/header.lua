@@ -1,16 +1,9 @@
 -- Import
 local view = blame.view
--- Prototype
-local header = {}
 
 function view.NewHeader(parent)
-	return blame.new2(header, parent)
-end
+	local self = {}
 
-function header:ctor(parent)
-	self.OnDragStart = blame.new_event()
-	self.OnDragStop = blame.new_event()
-	
 	local f = CreateFrame("Frame", "$parent_Header", parent)
 	f:SetHeight(view.HEADER_HEIGHT)
 	f:SetWidth(parent:GetWidth())
@@ -20,8 +13,8 @@ function header:ctor(parent)
 	f:EnableMouse(true)
 	
 	f:RegisterForDrag("LeftButton")
-	f:SetScript("OnDragStart", function() self.OnDragStart:Fire() end)
-	f:SetScript("OnDragStop", function() self.OnDragStop:Fire() end)
+	f:SetScript("OnDragStart", function() api.Fire(view_event.DRAG_ON) end)
+	f:SetScript("OnDragStop", function() api.Fire(view_event.DRAG_OFF) end)
 	
 	local text = f:CreateFontString(nil, "OVERLAY", "GameFontWhite")
 	text:SetPoint("TOP", 0, 0)

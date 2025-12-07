@@ -7,7 +7,7 @@ function blame.NewUnitToEntry(model)
 			local name = api.UnitName(guid)
 			model.entries = append(model.entries, name)
 		end
-		api.Fire(view_event.EXTERNAL_UPDATE)
+		api.Fire(view_event.MODEL_CHANGED, len(model.entries))
 	end)
 
 	return self

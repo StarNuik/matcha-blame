@@ -94,3 +94,7 @@ function append(dest, ...)
 	end
 	return dest
 end
+
+function len(list)
+	return table.getn(list)
+end

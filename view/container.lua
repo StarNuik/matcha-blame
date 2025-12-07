@@ -1,15 +1,8 @@
 -- Import
 local view = blame.view
--- Prototype
-local container = {}
 
 function view.NewContainer(parent)
-	return blame.new2(container, parent)
-end
-
-function container:ctor(parent)
-	self.OnHover = blame.new_event()
-	self.OnUnhover = blame.new_event()
+	local self = {}
 
 	local f  = CreateFrame("Frame", "Blame_Container", parent)
 	f:SetWidth(view.CONTAINER_SIZE.width)
@@ -18,21 +11,16 @@ function container:ctor(parent)
 	f:SetMovable(true)
 	f:EnableMouse(true)
 
-	f:SetScript("OnEnter", function() self.OnHover:Fire() end)
-	f:SetScript("OnLeave", function() self.OnUnhover:Fire() end)
+	f:SetScript("OnEnter", function() api.Fire(view_event.HOVER_ON) end)
+	f:SetScript("OnLeave", function() api.Fire(view_event.HOVER_OFF) end)
+
+	api.Subscribe(view_event.DRAG_ON, function() f:StartMoving() end)
+	api.Subscribe(view_event.DRAG_OFF, function() f:StopMovingOrSizing() end)
+	api.Subscribe(view_event.FLEX_SIZE_CHANGED, function(size_y)
+		local height = view.HEADER_HEIGHT + size_y
+		f:SetHeight(height)
+	end)
 
 	self.frame = f
 	return self
-end
-
-function container:DragStart()
-	self.frame:StartMoving()
-end
-
-function container:DragStop()
-	self.frame:StopMovingOrSizing()
-end
-
-function container:SetHeight(size_y)
-	self.frame:SetHeight(view.HEADER_HEIGHT + size_y)
 end
