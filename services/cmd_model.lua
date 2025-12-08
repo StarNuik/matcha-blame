@@ -10,5 +10,11 @@ function blame.NewCmdModel(model)
 		api.Fire(view_event.MODEL_CHANGED)
 	end)
 
+	api.Subscribe(svc_event.CMD_LIMIT, function(limit)
+		model.list_limit = limit
+		BlameSaved.list_limit = limit
+		api.Fire(svc_event.MODEL_CHANGED)
+	end)
+
 	return {}
 end

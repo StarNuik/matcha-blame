@@ -18,6 +18,22 @@ api_event = {
 	UNIT_PORTRAIT_UPDATE = "UNIT_PORTRAIT_UPDATE",
 	PLAYER_TARGET_CHANGED = "PLAYER_TARGET_CHANGED",
 	UPDATE_MOUSEOVER_UNIT = "UPDATE_MOUSEOVER_UNIT",
+	ADDON_LOADED = "ADDON_LOADED",
+}
+
+api_class = {
+	DRUID = "DRUID",
+	HUNTER = "HUNTER",
+	MAGE = "MAGE",
+	PALADIN = "PALADIN",
+	PRIEST = "PRIEST",
+	ROGUE = "ROGUE",
+	SHAMAN = "SHAMAN",
+	WARLOCK = "WARLOCK",
+	WARRIOR = "WARRIOR",
+	PET = "PET",
+	NPC = "NPC",
+	ENEMY = "ENEMY",
 }
 
 local function handle_event()
@@ -30,22 +46,12 @@ local function init_frame()
 	f:SetScript("OnUpdate", function() api.bus.Fire(api_event.UPDATE) end)
 	f:SetScript("OnEvent", function() handle_event() end)
 
-	register = {
-		api_event.UNIT_AURA,
-		api_event.UNIT_FLAGS,
-		api_event.UNIT_HEALTH,
-		api_event.UNIT_COMBAT,
-		api_event.UNIT_FACTION,
-		api_event.UNIT_CASTEVENT,
-		api_event.UNIT_HAPPINESS,
-		api_event.UNIT_MODEL_CHANGED,
-		api_event.UNIT_PORTRAIT_UPDATE,
-		api_event.PLAYER_TARGET_CHANGED,
-		api_event.UPDATE_MOUSEOVER_UNIT,
-	}
-
-	for _, e in ipairs(register) do
-		f:RegisterEvent(e)
+	for k, v in pairs(api_event) do
+		if k == "UPDATE" then
+			-- continue
+		else
+			f:RegisterEvent(v)
+		end
 	end
 end
 
@@ -59,6 +65,24 @@ function api.Fire(key, ...)
 	api.bus.Fire(key, unpack(arg))
 end
 
+function api.UnitClass(unit_id)
+	if api.IsNpc(unit_id) then
+		return api_class.NPC
+	end
+	if api.IsPet(unit_id) then
+		if api.IsDemon(unit_id) then
+			return api_class.WARLOCK
+		else
+			return api_class.HUNTER
+		end
+	end
+	if api.IsEnemy(unit_id) then
+		return api_class.ENEMY
+	end
+	_, class = UnitClass(unit_id)
+	return api_class[class]
+end
+
 function api.GetMobTarget(unit_id)
 	local exists, guid = UnitExists(unit_id .. "target")
 	if not exists then
@@ -70,12 +94,28 @@ function api.GetMobTarget(unit_id)
 	return guid
 end
 
+function api.CanCache(unit_id)
+	return api.as_bool(UnitName(unit_id) ~= "Unknown")
+end
+
+function api.IsPet(unit_id) -- procs on Mind Control? oh well...
+	return api.as_bool(not UnitIsPlayer(unit_id) and UnitPlayerControlled(unit_id))
+end
+
+function api.IsDemon(unit_id)
+	return UnitCreatureType(unit_id) == "Demon"
+end
+
+function api.IsNpc(unit_id)
+	return api.as_bool(not UnitIsPlayer(unit_id) and not UnitPlayerControlled(unit_id))
+end
+
+function api.IsEnemy(unit_id)
+	return api.as_bool(UnitCanAttack(unit_id, "player"))
+end
+
 function api.IsEnemyMob(unit_id)
-	return api.as_bool(UnitExists(unit_id)
-		and not UnitIsDead(unit_id)
-		and not UnitIsPlayer(unit_id)
-		and UnitCanAttack(unit_id, "player")
-	)
+	return api.IsEnemy(unit_id) and api.IsNpc(unit_id)
 end
 
 function api.UnitGuid(unit_id)

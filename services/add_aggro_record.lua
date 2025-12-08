@@ -1,12 +1,4 @@
 function blame.NewAddAggroRecord(model)
-	local self = {}
-
-	local function new_record(guid)
-		return {
-			guid = guid,
-			time = time(),
-		}
-	end
 
 	local function add_aggro_record(guid)
 		local target_guid = api.GetMobTarget(guid)
@@ -14,14 +6,14 @@ function blame.NewAddAggroRecord(model)
 			return
 		end
 
-		local record = new_record(target_guid)
+		local record = model.NewRecord(target_guid, time())
 		append(model.aggro_records, record)
 		
-		local records_len = len(model.aggro_records)
-		api.Fire(svc_event.RECORD_ADDED, records_len)
+		local idx_last = len(model.aggro_records)
+		api.Fire(svc_event.RECORD_ADDED, idx_last)
 	end
 
 	api.Subscribe(svc_event.AGGRO_ADDED, add_aggro_record)
 
-	return self
+	return {}
 end

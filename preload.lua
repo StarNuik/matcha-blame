@@ -5,6 +5,7 @@ blame.view = {}
 -- Consts
 blame.DISPLAY_NAME = "Blame"
 blame.ADDON_NAME = "matcha-blame"
+blame.DEFAULT_LIST_LIMIT = 10
 
 function blame.SetEnv(t, index)
 	setmetatable(t, {__index = index or getfenv(1)})

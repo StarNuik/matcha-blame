@@ -2,9 +2,10 @@
 ## Title: |cff74A12EMatcha|cffffffff Blame
 ## Notes: Show who pulled aggro
 ## Version: 0.2
-
+## SavedVariables: BlameSaved
 
 preload.lua
+saved.lua
 api.lua
 
 model.lua
@@ -29,10 +30,8 @@ services\add_aggro_record.lua
 services\group_record.lua
 services\view_hide.lua
 services\cmd_model.lua
-
-main.lua
+services\cache_unit_info.lua
 
 slash.lua
 
-# old
-# view.lua
+main.lua
