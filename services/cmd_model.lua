@@ -3,6 +3,7 @@ function blame.NewCmdModel(model)
 		model.Clear()
 		api.Fire(view_event.MODEL_ENTRIES_CHANGED, 0)
 		api.Fire(view_event.MODEL_CHANGED)
+		api.Fire(svc_event.MODEL_CHANGED)
 	end)
 
 	api.Subscribe(svc_event.CMD_MODEL_SHOW, function()

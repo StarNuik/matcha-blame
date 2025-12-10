@@ -16,10 +16,10 @@ function view.NewPool(parent, get_entry)
 	api.Subscribe(view_event.MODEL_ENTRIES_CHANGED, function(count) self:resize(count) end)
 
 	function self:resize(target_count)
-		if target_count == len(self.active) then
-			api.Fire(view_event.POOL_ASKS_UPDATE)
-			return
-		end
+		-- if target_count == len(self.active) then
+		-- 	api.Fire(view_event.POOL_ASKS_UPDATE)
+		-- 	return
+		-- end
 
 		self:hide_all()
 		while self.item_count < target_count do
